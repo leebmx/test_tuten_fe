@@ -1,0 +1,79 @@
+<div class="p-grid">
+  <div class="p-col-8 p-offset-2">
+
+    <div class="container-md">
+      <div class="row">
+        <div class="col">
+          <h4>
+            List Booking
+          </h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <p-table #dt [value]="booking" [(selection)]="selectedBooking" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+          [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+          [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+          [globalFilterFields]="['bookingId','tutenUserProfessional.tutenUser1.firstName','tutenUserProfessional.tutenUser1.lastName','bookingTime', 'tutenUserProfessional.streetAddress', 'bookingPrice']">
+              <ng-template pTemplate="caption">
+                  <div class="table-header">
+                      <span class="p-input-icon-left">
+                          <i class="pi pi-search"></i>
+                          <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Busqueda Global" />
+                      </span>
+                  </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                  <tr>
+                      <!-- <th style="width: 3rem"></th> -->
+                      <th pSortableColumn="bookingId">BookingId <p-sortIcon field="bookingId"></p-sortIcon></th>
+                      <th pSortableColumn="tutenUserProfessional.tutenUser1.firstName">FirstName <p-sortIcon field="tutenUserProfessional.tutenUser1.firstName"></p-sortIcon></th>
+                      <th pSortableColumn="tutenUserProfessional.tutenUser1.lastName">LastName <p-sortIcon field="tutenUserProfessional.tutenUser1.lastName"></p-sortIcon></th>
+                      <th pSortableColumn="bookingTime">booking Time<p-sortIcon field="bookingTime"></p-sortIcon></th>
+                      <th pSortableColumn="tutenUserProfessional.streetAddress">Street Address <p-sortIcon field="tutenUserProfessional.streetAddress"></p-sortIcon></th>
+                      <th pSortableColumn="bookingPrice">bookingPrice <p-sortIcon field="bookingPrice"></p-sortIcon></th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-booking>
+                  <tr class="p-selectable-row">
+                      <!-- <td>
+                          <p-tableCheckbox [value]="booking"></p-tableCheckbox>
+                      </td> -->
+                      <td>
+                          {{booking.bookingId}}
+                      </td>
+                      <td>
+                          <span class="image-text">{{booking.tutenUserProfessional.tutenUser1.firstName}}</span>
+                      </td>
+                      <td>
+                          <span class="image-text">{{booking.tutenUserProfessional.tutenUser1.lastName}}</span>
+                      </td>
+                      <td>
+                          {{booking.bookingTime}}
+                      </td>
+                      <td>
+                        {{booking.tutenUserProfessional.streetAddress}}
+                      </td>
+                      <td>
+                        {{booking.bookingPrice}}
+                      </td>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                  <tr>
+                      <td colspan="8">No customers found.</td>
+                  </tr>
+              </ng-template>
+          </p-table>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Mensajeria -->
+<p-toast position="top-center"></p-toast>

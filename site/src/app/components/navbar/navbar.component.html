@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand font-weight-bold" href="#">[ MT | LeeProductions ]</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="nav navbar-nav" *ngIf="isLogin">
+        <li class="nav-item">
+          <a class="nav-link" href="#" [routerLink]="['']">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" [routerLink]="['/booking']">Booking</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" [routerLink]="['/empleados']">Empleados</a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right" *ngIf="isLogin">
+        <li class="nav-item">
+          {{nombreUsuario}}
+        </li>
+        <li class="nav-item">
+          <span class="nav-link">Hola! : {{emailUsuario}}</span>
+        </li>
+        <li class="nav-item font-weight-bold">
+          <a class="nav-link" href="#" (click)="logout()"><b>Salir</b></a>
+        </li>
+      </ul>
+    </div>
+</nav>
+
+<!-------------------------
+  CONFIRMDIALOG
+ -------------------------->
+ <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+<!-- Mensajeria -->
+<p-toast position="top-center"></p-toast>

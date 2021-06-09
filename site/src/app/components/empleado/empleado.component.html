@@ -1,0 +1,133 @@
+          <p-table *ngIf="!newEdit" #dt [value]="empleados" [(selection)]="selectedEmpleados" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+          [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+          [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+          [globalFilterFields]="['id','rut','nombre','apellidoPaterno','apellidoMaterno', 'correo', 'fechaIncorporacion']">
+              <ng-template pTemplate="caption">
+                  <div class="table-header">
+                      <span class="p-input-icon-left">
+                          <i class="pi pi-search"></i>
+                          <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Busqueda Global" />
+                      </span>
+                      Empleados
+                          <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded" (click)="showForm('agregar', '')"></button>
+                  </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                  <tr>
+                      <!-- <th style="width: 3rem"></th> -->
+                      <th pSortableColumn="id">id <p-sortIcon field="id"></p-sortIcon></th>
+                      <th pSortableColumn="rut">rut <p-sortIcon field="rut"></p-sortIcon></th>
+                      <th pSortableColumn="nombre">nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+                      <th pSortableColumn="apellidoPaterno">apellido Paterno <p-sortIcon field="apellidoPaterno"></p-sortIcon></th>
+                      <th pSortableColumn="apellidoMaterno">apellido Materno<p-sortIcon field="apellidoMaterno"></p-sortIcon></th>
+                      <th pSortableColumn="correo">correo<p-sortIcon field="correo"></p-sortIcon></th>
+                      <th pSortableColumn="fechaIncorporacion">fecha Incorporacion<p-sortIcon field="fechaIncorporacion"></p-sortIcon></th>
+                      <th pSortableColumn="fechaIncorporacion">Acciones<p-sortIcon field="fechaIncorporacion"></p-sortIcon></th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-empleados>
+                  <tr class="p-selectable-row">
+                      <!-- <td>
+                          <p-tableCheckbox [value]="empleados"></p-tableCheckbox>
+                      </td> -->
+                      <td>
+                          {{empleados.id}}
+                      </td>
+                      <td>
+                          <span class="image-text">{{empleados.rut}}</span>
+                      </td>
+                      <td>
+                          <span class="image-text">{{empleados.nombre}}</span>
+                      </td>
+                      <td>
+                        <span class="image-text">{{empleados.apellidoPaterno}}</span>
+                      </td>
+                      <td>
+                        <span class="image-text">{{empleados.apellidoMaterno}}</span>
+                      </td>
+                      <td>
+                        <span class="image-text">{{empleados.correo}}</span>
+                      </td>
+                      <td>
+                        <span class="image-text">{{empleados.fechaIncorporacion}}</span>
+                      </td>
+                      <td>
+                        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-warning" (click)="showForm('editar', empleados)"></button>
+                        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger" (click)="eliminar(empleados)"></button>
+                      </td>
+
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                  <tr>
+                      <td colspan="8">No customers found.</td>
+                  </tr>
+              </ng-template>
+          </p-table>
+
+<!-------------------------
+  CONFIRMDIALOG
+ -------------------------->
+ <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+<!-- Mensajeria -->
+<p-toast position="top-center"></p-toast>
+
+<!--
+  formulario
+ -->
+ <div *ngIf="newEdit" class="p-grid" [formGroup]="formGroup">
+  <div class="p-col-8 p-offset-2">
+      <div class="row">
+        <div class="col">
+          <h5>{{tituloForm}}</h5>
+          <div class="p-field p-grid">
+              <label for="firstname3" class="p-col-fixed" style="width:100px">rut</label>
+              <div class="p-col">
+                  <input formControlName="rut" id="rut" type="text" pInputText>
+              </div>
+          </div>
+          <div class="p-field p-grid">
+              <label for="lastname3" class="p-col-fixed" style="width:100px">nombre</label>
+              <div class="p-col">
+                  <input formControlName="nombre"  id="nombre" type="text" pInputText>
+              </div>
+          </div>
+          <div class="p-field p-grid">
+            <label for="lastname3" class="p-col-fixed" style="width:100px">A. Paterno</label>
+            <div class="p-col">
+                <input formControlName="apaterno"  id="apaterno" type="text" pInputText>
+            </div>
+          </div>
+          <div class="p-field p-grid">
+            <label for="lastname3" class="p-col-fixed" style="width:100px">A. Materno</label>
+            <div class="p-col">
+                <input formControlName="amaterno"  id="amaterno" type="text" pInputText>
+            </div>
+          </div>
+          <div class="p-field p-grid">
+            <label for="lastname3" class="p-col-fixed" style="width:100px">correo</label>
+            <div class="p-col">
+                <input formControlName="correo" id="correo" type="text" pInputText>
+            </div>
+          </div>
+
+          <div class="p-field p-grid">
+            <div class="p-col">
+              <span class="p-buttonset">
+                <button
+                *ngIf="!rut?.errors?.required && !rut?.errors?.minlength && !rut?.errors?.maxLength
+                && !nombre?.errors?.required && !nombre?.errors?.minlength && !nombre?.errors?.maxLength
+                && !apaterno?.errors?.required && !apaterno?.errors?.minlength && !apaterno?.errors?.maxLength
+                && !amaterno?.errors?.required && !amaterno?.errors?.minlength && !amaterno?.errors?.maxLength
+                && !correo?.errors?.required && !correo?.errors?.minlength && !correo?.errors?.maxLength && !correo?.errors?.email"
+                  pButton pRipple label="Guardar" icon="pi pi-check" (click)="guardar()"></button>
+                &nbsp;
+                &nbsp;
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" (click)="cancelar()"></button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
